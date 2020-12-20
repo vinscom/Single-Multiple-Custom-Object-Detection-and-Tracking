@@ -27,14 +27,14 @@ max_cosine_distance = 0.5
 nn_budget = None
 nms_max_overlap = 0.8
 
-model_filename = 'model_data/mars-small128.pb'
+model_filename = './model_data/mars-small128.pb'
 encoder = gdet.create_box_encoder(model_filename, batch_size=1)
 metric = nn_matching.NearestNeighborDistanceMetric('cosine', max_cosine_distance, nn_budget)
 tracker = Tracker(metric)
 
 vid = cv2.VideoCapture('./data/video/car_2.mp4')
 
-codec = cv2.VideoWriter_fourcc(*'XVID')
+codec = cv2.VideoWriter_fourcc(*'DIVX')
 vid_fps =int(vid.get(cv2.CAP_PROP_FPS))
 vid_width,vid_height = int(vid.get(cv2.CAP_PROP_FRAME_WIDTH)), int(vid.get(cv2.CAP_PROP_FRAME_HEIGHT))
 out = cv2.VideoWriter('./data/video/results.avi', codec, vid_fps, (vid_width, vid_height))
@@ -123,8 +123,8 @@ while True:
 
     fps = 1./(time.time()-t1)
     cv2.putText(img, "FPS: {:.2f}".format(fps), (0,30), 0, 1, (0,0,255), 2)
-    cv2.resizeWindow('output', 1024, 768)
-    cv2.imshow('output', img)
+    #cv2.resizeWindow('output', 1024, 768)
+    #cv2.imshow('output', img)
     out.write(img)
 
     if cv2.waitKey(1) == ord('q'):
